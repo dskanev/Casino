@@ -8,6 +8,5 @@ namespace Casino.Identity.Data.Models
 {
     public class User : IdentityUser
     {
-        public double Balance { get; set; }
     }
 }
