@@ -9,21 +9,21 @@ namespace Casino.Slot.Services
 {
     public class SlotMachineService : ISlotMachineService
     {
-        private readonly ISymbolGenerationService _symbolFactory;
+        private readonly ISymbolGenerationService _symbolGenerationService;
         public SlotMachineService(
-            ISymbolGenerationService symbolFactory)
+            ISymbolGenerationService symbolGenerationService)
         {
-            _symbolFactory = symbolFactory;
+            _symbolGenerationService = symbolGenerationService;
         }
 
         public Line GetLineOfSymbols(int sizeOfLine)
         {
-            return _symbolFactory.GenerateLine(sizeOfLine);
+            return _symbolGenerationService.GenerateLine(sizeOfLine);
         }
 
         public Spin GetSpinResult(long betSize)
         {
-            var spin = _symbolFactory
+            var spin = _symbolGenerationService
                 .GenerateSpin();        
             
             return CalculateWinnings(spin, betSize);
@@ -64,7 +64,7 @@ namespace Casino.Slot.Services
 
         public Dictionary<string, double> GetSymbolsProbability()
         {
-            return _symbolFactory
+            return _symbolGenerationService
                 .GetSymbolsProbability();
         }
     }
