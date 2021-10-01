@@ -9,9 +9,9 @@ namespace Casino.Slot.Services
 {
     public class SlotMachineService : ISlotMachineService
     {
-        private readonly ISymbolFactory _symbolFactory;
+        private readonly ISymbolGenerationService _symbolFactory;
         public SlotMachineService(
-            ISymbolFactory symbolFactory)
+            ISymbolGenerationService symbolFactory)
         {
             _symbolFactory = symbolFactory;
         }

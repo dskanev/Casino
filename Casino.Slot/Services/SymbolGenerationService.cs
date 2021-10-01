@@ -1,7 +1,11 @@
-﻿using Casino.Common;
+﻿using AutoMapper;
+using Casino.Common;
+using Casino.Common.Services;
 using Casino.Slot.Constants;
+using Casino.Slot.Data;
 using Casino.Slot.Models;
 using Casino.Slot.Models.Symbols;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +13,23 @@ using System.Threading.Tasks;
 
 namespace Casino.Slot.Services.Symbols
 {
-    public class SymbolFactory : ISymbolFactory
-    {       
+    public class SymbolGenerationService : ISymbolGenerationService
+    {
+        private readonly ISlotMachineDataService _slotMachineDataService;
+        public SymbolGenerationService(ISlotMachineDataService slotMachineDataService)
+        {
+            _slotMachineDataService = slotMachineDataService;
+        }
+
         /// <summary>
         /// Generates a symbol for a line of the slot machine's spin
         /// </summary>
         /// <returns></returns>
         public Symbol GenerateSymbol()
         {            
-            var allSymbols = GetAllSymbols();
+            var allSymbols = _slotMachineDataService
+                .GetAllSymbols();
+
             return DrawSymbol(allSymbols);
         }
 
@@ -27,7 +39,8 @@ namespace Casino.Slot.Services.Symbols
         /// <returns></returns>
         public Dictionary<string, double> GetSymbolsProbability()
         {
-            var allSymbols = GetAllSymbols();
+            var allSymbols = _slotMachineDataService
+                .GetAllSymbols();
             var totalRarity = allSymbols
                 .Sum(x => x.Rarity);
 
@@ -80,22 +93,7 @@ namespace Casino.Slot.Services.Symbols
                 result.Lines.Add(GenerateLine(SlotMachineConstants._defaultLineSize));
             }
             return result;
-        }
-
-        /// <summary>
-        /// Gets all symbols
-        /// </summary>
-        /// <returns></returns>
-        private List<Symbol> GetAllSymbols()
-        {
-            return new List<Symbol>() {
-                new Symbol{ Name = "Stone", Coefficient = 0.2, Rarity = 0.70 },
-                new Symbol{ Name  = "Apple", Coefficient = 0.4, Rarity = 0.45 },
-                new Symbol{ Name = "Banana", Coefficient = 0.6, Rarity = 0.35 },
-                new Symbol{ Name = "Pineapple", Coefficient = 0.8, Rarity = 0.15 },
-                new Symbol{ Name = "Wildcard", Coefficient = 0, Rarity = 0.05 },
-            };
-        }
+        }        
 
         /// <summary>
         /// Draws a symbol from a list of symbols

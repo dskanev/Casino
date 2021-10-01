@@ -1,4 +1,5 @@
 ﻿using Casino.Slot.Models;
+using Casino.Slot.Models.Symbols;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Casino.Slot.Data
         {
         }
 
-        public DbSet<Spin> Recipes { get; set; }
+        public DbSet<Symbol> Symbols { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

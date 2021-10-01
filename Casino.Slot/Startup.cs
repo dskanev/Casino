@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Casino.Common.Infrastructure;
+using Casino.Common.Services;
 using Casino.Slot.Data;
 using Casino.Slot.Models.Symbols;
 using Casino.Slot.Services;
@@ -28,31 +29,19 @@ namespace Casino.Slot
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                //.AddWebService<SlotMachineDbContext>(this.Configuration)                
+                .AddWebService<SlotMachineDbContext>(this.Configuration)
+                .AddTransient<IDataSeeder, SlotMachineDataSeeder>()
                 .AddTransient<ISlotMachineService, SlotMachineService>()
-                .AddTransient<ISymbolFactory, SymbolFactory>()
+                .AddTransient<ISymbolGenerationService, SymbolGenerationService>()
+                .AddTransient<ISlotMachineDataService, SlotMachineDataService>()
                 .AddMessaging();
 
             services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+            => app
+                .UseWebService(env)
+                .Initialize();
     }
 }

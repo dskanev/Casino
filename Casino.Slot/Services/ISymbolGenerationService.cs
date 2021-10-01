@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Casino.Slot.Services.Symbols
 {
-    public interface ISymbolFactory
+    public interface ISymbolGenerationService
     {
         /// <summary>
         /// Generates a symbol for a line of the slot machine's spin
