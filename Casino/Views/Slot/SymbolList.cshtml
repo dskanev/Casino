@@ -1,0 +1,39 @@
+﻿@model Casino.ViewModels.SlotMachine.SymbolProbabilityOutputModel 
+@{ ViewData["Title"] = "Slot Machine"; }
+
+<div class="container">
+
+    <h3>Slot Machine</h3>
+    <p>
+        This <strong>Slot Machine</strong> is a great way to lose your mon... win big.
+    </p>
+    <p>
+        <strong>About the slot machine</strong>
+    </p>
+    <p>
+        Each winning line contains 3 matching symbols.
+        The <strong>Wildcard</strong> symbol <strong>matches</strong> any other <strong>symbol.</strong>        
+    </p>
+    <p>
+        Here you can see more details about the symbols.
+    </p>
+
+    <div class="row">
+        <table class="table table-danger">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var symbol in Model.Symbols)
+                {
+    <tr>
+        <th scope="row">@symbol.Name</th>
+        <td>@symbol.Probability%</td>
+    </tr>}
+            </tbody>
+        </table>
+    </div>
+</div>

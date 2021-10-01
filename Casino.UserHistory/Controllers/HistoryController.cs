@@ -20,8 +20,8 @@ namespace Casino.UserHistory.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route(Id)]
-        public async Task<List<SpinHistory>> MealsTracked(string userId)
+        [Route(nameof(GetSpinHistory))]
+        public async Task<List<SpinHistory>> GetSpinHistory(string userId)
         {
             var result = await this.userHistoryService.GetSpinHistory(userId);
             return result;
