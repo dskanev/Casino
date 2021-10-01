@@ -1,20 +1,5 @@
-﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:7856",
-      "sslPort": 44310
-    }
-  },
-  "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
+﻿{ 
+  "profiles": {    
     "Casino.Identity": {
       "commandName": "Project",
       "dotnetRunMessages": "true",

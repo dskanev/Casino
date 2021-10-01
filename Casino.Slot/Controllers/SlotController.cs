@@ -2,6 +2,7 @@
 using Casino.Slot.Models;
 using Casino.Slot.Models.Symbols;
 using Casino.Slot.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Casino.Slot.Controllers
         {
             _slotMachineService = slotMachineService;
         }
-
+        
         [HttpGet]
         [Route(nameof(GetLine))]
         public Line GetLine(int sizeOfLine)
@@ -26,6 +27,7 @@ namespace Casino.Slot.Controllers
             return _slotMachineService.GetLineOfSymbols(sizeOfLine);
         }
 
+        [Authorize]
         [HttpGet]
         [Route(nameof(GetSpinResult))]
         public Spin GetSpinResult(long betSize)
