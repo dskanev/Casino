@@ -36,7 +36,7 @@ namespace Casino.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> SymbolList()
+        public IActionResult SymbolList()
         {
             var symbols = _slotService
                 .GetSymbolsProbability()

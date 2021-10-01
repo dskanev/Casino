@@ -36,7 +36,7 @@ namespace Casino.Controllers
             _mapper = mapper;
             _userHistoryService = userHistory;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             if (_currentUserService.UserId != null)
             {
