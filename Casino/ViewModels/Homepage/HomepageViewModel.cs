@@ -8,6 +8,7 @@ namespace Casino.ViewModels.Homepage
 {
     public class HomepageViewModel
     {
-        public IEnumerable<SpinHistoryOutputModel> PastSpins { get; set; } = new List<SpinHistoryOutputModel>();
+        public IEnumerable<SpinHistory> PastSpins { get; set; } = new List<SpinHistory>();
+        public double Balance { get; set; }
     }
 }

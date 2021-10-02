@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Casino.Identity.Data.Models
+namespace Casino.ViewModels.UserHistory
 {
-    public class User : IdentityUser
+    public class BalanceOutputModel
     {
         public double Balance { get; set; }
     }

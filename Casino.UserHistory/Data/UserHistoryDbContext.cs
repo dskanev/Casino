@@ -16,6 +16,7 @@ namespace Casino.UserHistory.Data
         }
 
         public DbSet<SpinHistory> SpinHistory { get; set; }
+        public DbSet<UserBalance> UserBalance { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

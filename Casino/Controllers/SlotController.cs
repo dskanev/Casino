@@ -35,7 +35,7 @@ namespace Casino.Controllers
             _userHistoryService = userHistory;
         }
 
-        [Authorize]
+        [Authorize]        
         public IActionResult SymbolList()
         {
             var symbols = _slotService
@@ -50,6 +50,29 @@ namespace Casino.Controllers
                 .ToList();
 
             return View(new SymbolProbabilityOutputModel { Symbols = symbols });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> SpinTheSlot(double betSize)
+        {
+            var userId = _currentUserService.UserId;
+            betSize = 2;
+
+            var userBalance = (await _userHistoryService.GetBalance(userId)).Balance;
+
+            if (userBalance < betSize)
+            {
+                return View();
+            }
+
+            var spinResult = await _slotService.SpinTheSlot(betSize);
+            // TODO: execute balance update with rabbit mq
+            var newBalance = await _userHistoryService.UpdateBalance(userId, userBalance + spinResult.Winnings - betSize);
+
+            return View(new SpinResultOutputModel {
+                SpinResult = spinResult,
+                NewBalance = newBalance.Balance
+            });
         }
     }
 }

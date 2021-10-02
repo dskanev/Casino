@@ -1,9 +1,11 @@
 ﻿using Casino.Common;
+using Casino.Common.Services;
 using Casino.Slot.Models;
 using Casino.Slot.Models.Symbols;
 using Casino.Slot.Services.Symbols;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Casino.Slot.Services
 {
@@ -26,6 +28,14 @@ namespace Casino.Slot.Services
             var spin = _symbolGenerationService
                 .GenerateSpin();        
             
+            return CalculateWinnings(spin, betSize);
+        }
+
+        public async Task<Result<Spin>> SpinTheSlot(string userId, long betSize)
+        {
+            var spin = _symbolGenerationService
+                .GenerateSpin();
+
             return CalculateWinnings(spin, betSize);
         }
 

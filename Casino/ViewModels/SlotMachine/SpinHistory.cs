@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Casino.ViewModels.SlotMachine
 {
-    public class SpinHistoryOutputModel
+    public class SpinHistory
     {
         public long Id { get; set; }
         public string UserId { get; set; }

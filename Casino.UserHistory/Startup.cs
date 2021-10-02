@@ -23,10 +23,16 @@ namespace Casino.UserHistory
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-            => services
-                .AddWebService<UserHistoryDbContext>(this.Configuration)
-                .AddTransient<IUserHistoryService, UserHistoryService>()
-                .AddMessaging();
+        {
+            services
+                  .AddWebService<UserHistoryDbContext>(this.Configuration)
+                  .AddTransient<IUserHistoryService, UserHistoryService>()
+                  .AddTransient<IUserBalanceRepository, UserBalanceRepository>()
+                  .AddTransient<ISpinHistoryRepository, SpinHistoryRepository>()
+                  .AddMessaging();
+
+            services.AddControllers();
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => app

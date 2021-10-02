@@ -1,0 +1,28 @@
+﻿@model Casino.ViewModels.SlotMachine.SpinResultOutputModel
+@{ ViewData["Title"] = "Slot Machine"; }
+
+<div class="container">
+    <h3>Is winning: @Model.SpinResult.IsWinning</h3>
+    <h3>Winnings: @Model.SpinResult.Winnings</h3>
+    <h3>Current Balance: @Model.NewBalance</h3>
+    <div class="row">
+        <table class="table table-danger">
+            <thead>
+                <tr>
+                    <th scope="col">Symbol</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var line in Model.SpinResult.Lines)
+                {
+                    <tr>
+                        @foreach (var symbol in line.Symbols)
+                        {
+                        <th scope="row">@symbol.Name</th>
+                        <td></td>}
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

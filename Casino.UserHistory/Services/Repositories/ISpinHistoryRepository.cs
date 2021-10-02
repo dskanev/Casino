@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 
 namespace Casino.UserHistory.Services
 {
-    public interface IUserHistoryService
+    public interface ISpinHistoryRepository : IDataService<SpinHistory>
     {
         Task<List<SpinHistory>> GetSpinHistory(string userId);
         Task SaveSpinHistoryRecord(HistoryRecordInputModel model);
-        Task<Result<UserOutputModel>> AddBalance(string userId, double balanceToAdd);
-        Task<Result<UserOutputModel>> GetBalance(string userId);
-        Task<Result<UserOutputModel>> UpdateBalance(string userId, double newBalance);
     }
 }

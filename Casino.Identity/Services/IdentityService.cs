@@ -10,16 +10,20 @@ namespace Casino.Identity.Services
     public class IdentityService : IIdentityService
     {
         private const string InvalidErrorMessage = "Invalid credentials.";
+        private const string InsufficientBalanceMessage = "Insufficient balance.";
 
         private readonly UserManager<User> userManager;
         private readonly ITokenGeneratorService jwtTokenGenerator;
+        private readonly IIdentityDataService identityDataService;
 
         public IdentityService(
             UserManager<User> userManager,
-            ITokenGeneratorService jwtTokenGenerator)
+            ITokenGeneratorService jwtTokenGenerator,
+            IIdentityDataService identityDataService)
         {
             this.userManager = userManager;
             this.jwtTokenGenerator = jwtTokenGenerator;
+            this.identityDataService = identityDataService;
         }
 
         public async Task<Result<User>> Register(UserInputModel userInput)
@@ -27,7 +31,8 @@ namespace Casino.Identity.Services
             var user = new User
             {
                 Email = userInput.Email,
-                UserName = userInput.Email
+                UserName = userInput.Email,
+                Balance = 0
             };
 
             var identityResult = await this.userManager.CreateAsync(user, userInput.Password);

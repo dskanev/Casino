@@ -13,5 +13,6 @@ namespace Casino.ViewModels.Identity
         }
 
         public string Token { get; }
+        public double Balance { get; set; }
     }
 }

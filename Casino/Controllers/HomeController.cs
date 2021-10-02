@@ -56,7 +56,15 @@ namespace Casino.Controllers
             {
                 model.PastSpins = await this._userHistoryService.GetSpinHistory(userId);
             }
-            catch { }            
+            catch (Exception e)
+            { }
+            try
+            {
+                var result = await this._userHistoryService.GetBalance(userId);
+                model.Balance = result.Balance;
+            }
+            catch (Exception e) 
+            { }
 
             return View(model);
         }
