@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Casino.Common.Infrastructure;
 using Casino.Common.Services.Identity;
 using Casino.Services.Identity;
 using Casino.Services.Slot;
@@ -63,7 +64,7 @@ namespace Casino.Controllers
 
             if (userBalance < betSize)
             {
-                return View(new SpinResultOutputModel { ErrorMessage = $"Insufficient Balance! Current Balance: {Math.Round(userBalance,1)}" });
+                return View(new SpinResultOutputModel { ErrorMessage = $"Insufficient Balance! Current Balance: {userBalance.RoundUpToOneSymbol()}" });
             }
 
             var spinResult = await _slotService.SpinTheSlot(betSize);

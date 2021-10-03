@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Casino.Common;
+using Casino.Common.Infrastructure;
 using Casino.Common.Services;
 using Casino.Slot.Constants;
 using Casino.Slot.Data;
@@ -134,7 +135,7 @@ namespace Casino.Slot.Services.Symbols
 
         private double GetProbability(double rarity, double sumOfRarerSymbolsRarity, double totalRarity)
         {
-            return Math.Round(rarity / totalRarity * 100, 2);
+            return (rarity / totalRarity * 100).RoundUpToTwoSymbols();
         }
     }
 }

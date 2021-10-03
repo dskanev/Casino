@@ -14,6 +14,7 @@ namespace Casino.Common
     public class NumericConstants
     {
         public const int One = 1;
+        public const int Two = 2;
         public const int OneHundred = 100;
     }
 }

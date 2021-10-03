@@ -1,4 +1,5 @@
 ﻿@model Casino.ViewModels.UserHistory.UserHistoryViewModel
+@using Casino.Common.Infrastructure 
 
 @{ ViewData["Title"] = "Home Page"; }
 
@@ -13,7 +14,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">@(Math.Round(Model.Balance, 1))</th>
+                    <th scope="row">@Model.Balance.RoundUpToOneSymbol()</th>
                 </tr>
             </tbody>
         </table>
@@ -38,8 +39,8 @@
                         <th scope="row">@Model.BiggestWin.Timestamp</th>
                         <td>@Model.BiggestWin.BetAmmount</td>
                         <th scope="row">@Model.BiggestWin.Won</th>
-                        <td>@(Math.Round(Model.BiggestWin.Winnings, 1))</td>
-                        <th scope="col">@(Math.Round((decimal)Model.BiggestWin.Winnings/ (decimal)Model.BiggestWin.BetAmmount, 1))</th>
+                        <td>@Model.BiggestWin.Winnings.RoundUpToOneSymbol()</td>
+                        <th scope="col">@((Model.BiggestWin.Winnings/ Model.BiggestWin.BetAmmount).RoundUpToOneSymbol())</th>
                     </tr>
 
                 </tbody>
@@ -67,8 +68,8 @@
         <th scope="row">@spin.Timestamp</th>
         <td>@spin.BetAmmount</td>
         <th scope="row">@spin.Won</th>
-        <td>@(Math.Round(spin.Winnings, 1))</td>
-        <th scope="col">@(Math.Round(spin.Winnings/spin.BetAmmount, 1))</th>
+        <td>@spin.Winnings.RoundUpToOneSymbol()</td>
+        <th scope="col">@((spin.Winnings/spin.BetAmmount).RoundUpToOneSymbol())</th>
     </tr>
 }
             </tbody>

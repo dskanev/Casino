@@ -21,6 +21,8 @@ namespace Casino.Controllers
         private readonly ICurrentUserService _currentUserService;
         private readonly IUserHistoryService _userHistoryService;
 
+        private const int NUMBER_OF_HISTORY_RECORDS_TO_SHOW = 10;
+
         public UserController(
             IIdentityService identityService,
             ISlotService slotService,
@@ -43,7 +45,7 @@ namespace Casino.Controllers
 
             try
             {
-                model.PastSpins = await this._userHistoryService.GetSpinHistory(userId, 10);
+                model.PastSpins = await this._userHistoryService.GetSpinHistory(userId, NUMBER_OF_HISTORY_RECORDS_TO_SHOW);
                 model.BiggestWin = await this._userHistoryService.GetBiggestWin(userId);
                 model.Balance = (await this._userHistoryService.GetBalance(userId)).Balance;
             }

@@ -1,4 +1,5 @@
 ﻿@model Casino.ViewModels.SlotMachine.SpinResultOutputModel
+@using Casino.Common.Infrastructure 
 @{
     ViewData["Title"] = "Slot Machine";
     var isWin = Model.SpinResult != null && Model.SpinResult.IsWinning;
@@ -9,30 +10,40 @@
 <div class="container">
     @if (Model.SpinResult != default)
     {
-    <div class="row">
-        <table class="table @tableClass">
-            <thead>
-                <tr>
-                    <th scope="col">@spinResultMessage</th>
-                </tr>
-                <tr>                
-                    <th scope="col">Winnings</th>
-                    <th scope="col">Current Balance</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">@Math.Round(Model.SpinResult.Winnings, 1)</th>
-                    <th scope="row">@Math.Round(Model.NewBalance, 1)</th>
-                </tr>
-            </tbody>
-        </table>
-        </div>
-    }
-    else
-    {
-    <h3>@Model.ErrorMessage</h3>
-    }
+<div class="row">
+    <table class="table @tableClass">
+        <thead>
+            <tr>
+                <th scope="col">@spinResultMessage</th>
+            </tr>
+            <tr>
+                <th scope="col">Winnings</th>
+                <th scope="col">Current Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Model.SpinResult.Winnings.RoundUpToOneSymbol()</th>
+                <th scope="row">@Model.NewBalance.RoundUpToOneSymbol()</th>
+            </tr>
+        </tbody>
+    </table>
+</div> }
+            else
+            {
+<div class="row">
+    <table class="table @tableClass">
+        <thead>            
+            <tr>
+                <th scope="col">@Model.ErrorMessage</th>                
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+                }
 
     <div class="row">
         @if (Model.SpinResult != null)
@@ -49,7 +60,7 @@
 
         </div>
     </div>
-</div>          }}
+</div>              }}
 </div>}
     </div>
 
