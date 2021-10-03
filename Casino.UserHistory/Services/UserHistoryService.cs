@@ -17,7 +17,6 @@ namespace Casino.UserHistory.Services
         private readonly ISpinHistoryRepository spinHistoryRepository;
         private readonly IUserBalanceRepository userBalanceRepository;
 
-        private static string InsufficientFundsError = "Insufficient funds.";
         private static string UserDataNotFoundError = "No balance data was found for this user.";
 
         public UserHistoryService(IUserBalanceRepository userBalanceRepository,
@@ -68,7 +67,8 @@ namespace Casino.UserHistory.Services
 
             if (userBalance == default)
             {
-                return UserDataNotFoundError;
+                userBalance = new UserBalance { UserId = userId, Balance = 100 };
+                await userBalanceRepository.Save(userBalance);
             }
 
             return new UserOutputModel(userBalance.Balance);

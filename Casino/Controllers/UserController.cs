@@ -39,7 +39,7 @@ namespace Casino.Controllers
         public async Task<IActionResult> UserHistory()
         {
             var userId = _currentUserService.UserId;
-            var model = new UserHistoryViewModel { };
+            var model = new UserHistoryViewModel();
 
             try
             {
