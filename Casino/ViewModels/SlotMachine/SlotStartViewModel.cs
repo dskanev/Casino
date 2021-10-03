@@ -11,6 +11,7 @@ namespace Casino.ViewModels.SlotMachine
         public double Balance { get; set; }
 
         [Required]
+        [Display(Name ="Bet Amount")]
         [Range(1, int.MaxValue, ErrorMessage = "Please enter a positive number!")]
         public double BetSize { get; set; }
     }
