@@ -3,11 +3,22 @@
 @{ ViewData["Title"] = "Home Page"; }
 
 <div class="container">
+    
     <div class="row">
-       <p>
-           Your balance is @Model.Balance
-       </p>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Current Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@(Math.Round(Model.Balance, 1))</th>
+                </tr>
+            </tbody>
+        </table>
     </div>
+    
 </div>
 
 @section Scripts {

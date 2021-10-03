@@ -1,0 +1,27 @@
+﻿@model Casino.ViewModels.SlotMachine.SlotStartViewModel
+
+@{ ViewData["Title"] = "Home Page"; }
+
+<div class="row">
+    <div class="col-lg-4 offset-lg-4">
+        <h2>Start Spinning the Slot Machine</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 offset-lg-4">
+        <form asp-controller="Slot" asp-action="SpinTheSlot" method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="BetSize"></label>
+                <input asp-for="BetSize" type="number" class="form-control" id="betSize" aria-describedby="betSize" placeholder="Place your bet">
+                <span asp-validation-for="BetSize" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Spin</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

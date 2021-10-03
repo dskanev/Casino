@@ -20,10 +20,19 @@ namespace Casino.UserHistory.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("GetSpinHistory/{userId}")]
-        public async Task<List<SpinHistory>> GetSpinHistory(string userId)
+        [Route("GetSpinHistory/{userId}/{limit}")]
+        public async Task<List<SpinHistory>> GetSpinHistory(string userId, int limit)
         {
-            var result = await this.userHistoryService.GetSpinHistory(userId);
+            var result = await this.userHistoryService.GetSpinHistory(userId, limit);
+            return result;
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("GetBiggestWin/{userId}")]
+        public async Task<SpinHistory> GetBiggestWin(string userId)
+        {
+            var result = await this.userHistoryService.GetBiggestWin(userId);
             return result;
         }
 

@@ -10,7 +10,8 @@ namespace Casino.UserHistory.Services
 {
     public interface ISpinHistoryRepository : IDataService<SpinHistory>
     {
-        Task<List<SpinHistory>> GetSpinHistory(string userId);
+        Task<List<SpinHistory>> GetSpinHistory(string userId, int limit);
+        Task<SpinHistory> GetBiggestWin(string userId);
         Task SaveSpinHistoryRecord(HistoryRecordInputModel model);
     }
 }

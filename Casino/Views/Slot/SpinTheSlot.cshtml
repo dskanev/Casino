@@ -1,28 +1,59 @@
 ﻿@model Casino.ViewModels.SlotMachine.SpinResultOutputModel
-@{ ViewData["Title"] = "Slot Machine"; }
+@{
+    ViewData["Title"] = "Slot Machine";
+    var spinResultMessage = Model.SpinResult != null && Model.SpinResult.IsWinning ? "Congratulations!" : "Better luck next time!";
+}
 
 <div class="container">
-    <h3>Is winning: @Model.SpinResult.IsWinning</h3>
-    <h3>Winnings: @Model.SpinResult.Winnings</h3>
-    <h3>Current Balance: @Model.NewBalance</h3>
+    @if (Model.SpinResult != default)
+    {
+    <h3>@spinResultMessage</h3>
+                <h3>Winnings: @Math.Round(Model.SpinResult.Winnings, 1)</h3>
+                                <h3>Current Balance: @Math.Round(Model.NewBalance, 1)</h3> }
+                            else
+                            {
+                <h3>@Model.ErrorMessage</h3>}
+
     <div class="row">
-        <table class="table table-danger">
-            <thead>
-                <tr>
-                    <th scope="col">Symbol</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var line in Model.SpinResult.Lines)
-                {
-                    <tr>
-                        @foreach (var symbol in line.Symbols)
-                        {
-                        <th scope="row">@symbol.Name</th>
-                        <td></td>}
-                    </tr>
-                }
-            </tbody>
-        </table>
+        @if (Model.SpinResult != null)
+        {
+<table class="table table-danger">
+    <thead>
+        <tr>
+            <th scope="col">Slot Machine Spin Results</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var line in Model.SpinResult.Lines)
+        {
+<tr>
+    @foreach (var symbol in line.Symbols)
+    {
+<th scope="row">@symbol.Name</th>
+}
+</tr>}
+
+
+    </tbody>
+</table>}
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 offset-lg-4">
+            <form asp-controller="Slot" asp-action="SpinTheSlot" method="post">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="form-group">
+                    <label asp-for="BetSize"></label>
+                    <input asp-for="BetSize" type="number" class="form-control" id="betSize" aria-describedby="betSize" placeholder="Place your bet">
+                    <span asp-validation-for="BetSize" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Spin</button>
+            </form>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

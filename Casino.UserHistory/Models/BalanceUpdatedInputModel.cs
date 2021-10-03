@@ -1,13 +1,13 @@
-﻿using Casino.ViewModels.SlotMachine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Casino.ViewModels.Homepage
+namespace Casino.UserHistory.Models
 {
-    public class HomepageViewModel
+    public class BalanceUpdatedInputModel
     {
+        public string UserId { get; set; }
         public double Balance { get; set; }
     }
 }

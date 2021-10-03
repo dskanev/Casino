@@ -21,12 +21,25 @@ namespace Casino.UserHistory.Services
             this.mapper = mapper;
         }
 
-        public async Task<List<SpinHistory>> GetSpinHistory(string userId)
+        public async Task<List<SpinHistory>> GetSpinHistory(string userId, int limit)
         {
             return await this
                 .All()
                 .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.Timestamp)
+                .Take(limit)
                 .ToListAsync();
+        }
+
+        public async Task<SpinHistory> GetBiggestWin(string userId)
+        {
+            return await this
+                .All()
+                .Where(x => x.UserId == userId)
+                .Where(x => x.Won)
+                .OrderByDescending(x => x.Timestamp)
+                .OrderByDescending(x => x.Winnings)                
+                .FirstOrDefaultAsync();
         }
 
         public async Task SaveSpinHistoryRecord(HistoryRecordInputModel model)

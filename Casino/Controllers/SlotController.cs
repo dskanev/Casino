@@ -53,26 +53,32 @@ namespace Casino.Controllers
         }
 
         [Authorize]
+        [HttpPost]
         public async Task<IActionResult> SpinTheSlot(double betSize)
         {
             var userId = _currentUserService.UserId;
-            betSize = 2;
+            betSize = betSize != 0 ? betSize : 5;
 
             var userBalance = (await _userHistoryService.GetBalance(userId)).Balance;
 
             if (userBalance < betSize)
             {
-                return View();
+                return View(new SpinResultOutputModel { ErrorMessage = $"Insufficient Balance! Current Balance: {userBalance}" });
             }
 
             var spinResult = await _slotService.SpinTheSlot(betSize);
-            // TODO: execute balance update with rabbit mq
-            var newBalance = await _userHistoryService.UpdateBalance(userId, userBalance + spinResult.Winnings - betSize);
+            var newBalance = userBalance + spinResult.Winnings - betSize;
 
             return View(new SpinResultOutputModel {
                 SpinResult = spinResult,
-                NewBalance = newBalance.Balance
+                NewBalance = newBalance
             });
+        }
+
+        [Authorize]
+        public IActionResult SlotMachine()
+        {
+            return View();
         }
     }
 }

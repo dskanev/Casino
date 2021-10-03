@@ -29,10 +29,16 @@ namespace Casino.UserHistory.Services
             this.userBalanceRepository = userBalanceRepository;
         }
 
-        public async Task<List<SpinHistory>> GetSpinHistory(string userId)
+        public async Task<List<SpinHistory>> GetSpinHistory(string userId, int limit)
         {
             return await spinHistoryRepository
-                .GetSpinHistory(userId);
+                .GetSpinHistory(userId, limit);
+        }
+
+        public async Task<SpinHistory> GetBiggestWin(string userId)
+        {
+            return await spinHistoryRepository
+                .GetBiggestWin(userId);
         }
 
         public async Task SaveSpinHistoryRecord(HistoryRecordInputModel model)

@@ -1,8 +1,10 @@
 ﻿using Casino.Common;
+using Casino.Common.Messages;
 using Casino.Common.Services;
 using Casino.Slot.Models;
 using Casino.Slot.Models.Symbols;
 using Casino.Slot.Services.Symbols;
+using MassTransit;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,10 +14,14 @@ namespace Casino.Slot.Services
     public class SlotMachineService : ISlotMachineService
     {
         private readonly ISymbolGenerationService _symbolGenerationService;
+        private readonly IBus _publisher;
+
         public SlotMachineService(
-            ISymbolGenerationService symbolGenerationService)
+            ISymbolGenerationService symbolGenerationService,
+            IBus publisher)
         {
             _symbolGenerationService = symbolGenerationService;
+            _publisher = publisher;
         }
 
         public Line GetLineOfSymbols(int sizeOfLine)
@@ -36,7 +42,24 @@ namespace Casino.Slot.Services
             var spin = _symbolGenerationService
                 .GenerateSpin();
 
-            return CalculateWinnings(spin, betSize);
+            var spinResult = CalculateWinnings(spin, betSize);
+
+            await this._publisher.Publish(new SlotMachineWasSpunMessage
+            {
+                UserId = userId,
+                Won = spin.IsWinning,
+                Winnings = spin.Winnings,
+                BetAmmount = betSize,
+                Timestamp = System.DateTime.Now
+            });
+
+            await this._publisher.Publish(new BalanceUpdatedMessage
+            {
+                UserId = userId,
+                AddBalance = spinResult.Winnings - betSize
+            });
+
+            return spinResult;
         }
 
         private Spin CalculateWinnings(Spin spin, long betSize)

@@ -1,0 +1,79 @@
+﻿@model Casino.ViewModels.UserHistory.UserHistoryViewModel
+
+@{ ViewData["Title"] = "Home Page"; }
+
+<div class="container">
+
+    <div class="row">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Current Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@(Math.Round(Model.Balance, 1))</th>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-primary">
+            <thead>
+                <tr>
+                    <th scope="col">Biggest Win</th>
+                </tr>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Bet Amount</th>
+                    <th scope="col">Won</th>
+                    <th scope="col">Winnings</th>
+                    <th scope="col">Multiplier</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <th scope="row">@Model.BiggestWin?.Timestamp</th>
+                    <td>@Model.BiggestWin?.BetAmmount</td>
+                    <th scope="row">@Model.BiggestWin?.Won</th>
+                    <td>@(Math.Round((decimal)Model.BiggestWin?.Winnings, 1))</td>
+                    <th scope="col">@(Math.Round((decimal)Model.BiggestWin?.Winnings/ (decimal)Model.BiggestWin?.BetAmmount, 1))</th>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table class="table table-danger">
+            <thead>
+                <tr>
+                    <th scope="col">Last 10 spins</th>
+                </tr>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Bet Amount</th>
+                    <th scope="col">Won</th>
+                    <th scope="col">Winnings</th>
+                    <th scope="col">Multiplier</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var spin in Model.PastSpins)
+                {
+    <tr>
+        <th scope="row">@spin.Timestamp</th>
+        <td>@spin.BetAmmount</td>
+        <th scope="row">@spin.Won</th>
+        <td>@(Math.Round(spin.Winnings, 1))</td>
+        <th scope="col">@(Math.Round(spin.Winnings/spin.BetAmmount, 1))</th>
+    </tr>}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

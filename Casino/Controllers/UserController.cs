@@ -3,19 +3,17 @@ using Casino.Common.Services.Identity;
 using Casino.Services.Identity;
 using Casino.Services.Slot;
 using Casino.Services.UserHistory;
-using Casino.ViewModels;
-using Casino.ViewModels.Homepage;
+using Casino.ViewModels.UserHistory;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Casino.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         private readonly IIdentityService _identityService;
         private readonly ISlotService _slotService;
@@ -23,7 +21,7 @@ namespace Casino.Controllers
         private readonly ICurrentUserService _currentUserService;
         private readonly IUserHistoryService _userHistoryService;
 
-        public HomeController(
+        public UserController(
             IIdentityService identityService,
             ISlotService slotService,
             ICurrentUserService currentUserService,
@@ -36,36 +34,22 @@ namespace Casino.Controllers
             _mapper = mapper;
             _userHistoryService = userHistory;
         }
-        public IActionResult Index()
-        {
-            if (_currentUserService.UserId != null)
-            {
-                return RedirectToAction(nameof(HomeController.Homepage), "Home");
-            }
-
-            return View();
-        }
 
         [Authorize]
-        public async Task<IActionResult> Homepage()
+        public async Task<IActionResult> UserHistory()
         {
             var userId = _currentUserService.UserId;
-            var model = new HomepageViewModel { };
+            var model = new UserHistoryViewModel { };
 
             try
             {
+                model.PastSpins = await this._userHistoryService.GetSpinHistory(userId, 10);
+                model.BiggestWin = await this._userHistoryService.GetBiggestWin(userId);
                 model.Balance = (await this._userHistoryService.GetBalance(userId)).Balance;
             }
             catch { }
 
             return View(model);
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-            => View(new ErrorViewModel
-            {
-                RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier
-            });
     }
 }
