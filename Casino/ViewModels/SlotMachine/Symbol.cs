@@ -10,5 +10,6 @@ namespace Casino.ViewModels.SlotMachine
         public string Name { get; set; }
         public double Coefficient { get; set; }
         public double Rarity { get; set; }
+        public string ImageURL { get; set; }
     }
 }

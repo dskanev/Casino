@@ -1,42 +1,56 @@
 ﻿@model Casino.ViewModels.SlotMachine.SpinResultOutputModel
 @{
     ViewData["Title"] = "Slot Machine";
-    var spinResultMessage = Model.SpinResult != null && Model.SpinResult.IsWinning ? "Congratulations!" : "Better luck next time!";
+    var isWin = Model.SpinResult != null && Model.SpinResult.IsWinning;
+    var spinResultMessage = isWin ? "Congratulations!" : "Better luck next time!";
+    var tableClass = isWin ? "table-primary" : "table-danger";
 }
 
 <div class="container">
     @if (Model.SpinResult != default)
     {
-    <h3>@spinResultMessage</h3>
-                <h3>Winnings: @Math.Round(Model.SpinResult.Winnings, 1)</h3>
-                                <h3>Current Balance: @Math.Round(Model.NewBalance, 1)</h3> }
-                            else
-                            {
-                <h3>@Model.ErrorMessage</h3>}
+    <div class="row">
+        <table class="table @tableClass">
+            <thead>
+                <tr>
+                    <th scope="col">@spinResultMessage</th>
+                </tr>
+                <tr>                
+                    <th scope="col">Winnings</th>
+                    <th scope="col">Current Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Math.Round(Model.SpinResult.Winnings, 1)</th>
+                    <th scope="row">@Math.Round(Model.NewBalance, 1)</th>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    }
+    else
+    {
+    <h3>@Model.ErrorMessage</h3>
+    }
 
     <div class="row">
         @if (Model.SpinResult != null)
         {
-<table class="table table-danger">
-    <thead>
-        <tr>
-            <th scope="col">Slot Machine Spin Results</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var line in Model.SpinResult.Lines)
-        {
-<tr>
-    @foreach (var symbol in line.Symbols)
+<div class="mdl-grid" style="height:50%; position:relative;">
+    @foreach (var line in Model.SpinResult.Lines)
     {
-<th scope="row">@symbol.Name</th>
-}
-</tr>}
+@foreach (var symbol in line.Symbols)
+{
 
+<div class="mdl-cell mdl-cell--4-col">
+    <div class="demo-card-square mdl-card mdl-shadow--2dp" style="width: 100%; height:100%; min-height:50px">
+        <div class="mdl-card__title mdl-card--expand" id="symbol" style="background: url('@symbol.ImageURL') center no-repeat; ">
 
-    </tbody>
-</table>}
+        </div>
+    </div>
+</div>          }}
+</div>}
     </div>
 
     <div class="row">

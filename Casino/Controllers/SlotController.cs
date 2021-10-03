@@ -63,7 +63,7 @@ namespace Casino.Controllers
 
             if (userBalance < betSize)
             {
-                return View(new SpinResultOutputModel { ErrorMessage = $"Insufficient Balance! Current Balance: {userBalance}" });
+                return View(new SpinResultOutputModel { ErrorMessage = $"Insufficient Balance! Current Balance: {Math.Round(userBalance,1)}" });
             }
 
             var spinResult = await _slotService.SpinTheSlot(betSize);
