@@ -8,6 +8,12 @@ namespace Casino.Identity.Services
 {
     public interface ITokenGeneratorService
     {
+        /// <summary>
+        /// Generates a jwt token
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="roles"></param>
+        /// <returns></returns>
         string GenerateToken(User user, IEnumerable<string> roles = null);
     }
 }

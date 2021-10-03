@@ -10,7 +10,7 @@ namespace Casino.Slot.Services
     public interface ISlotMachineDataService : IDataService<Symbol>
     {
         /// <summary>
-        /// Gets all symbols
+        /// Gets all symbols from the database.
         /// </summary>
         /// <returns></returns>
         List<Symbol> GetAllSymbols();
