@@ -10,12 +10,10 @@ using System.Threading.Tasks;
 namespace Casino.Slot.Services
 {
     public class SlotMachineDataService : DataService<Symbol>, ISlotMachineDataService
-    { 
-        private readonly IMapper mapper;
-
-        public SlotMachineDataService(SlotMachineDbContext db, IMapper mapper)
+    {
+        public SlotMachineDataService(SlotMachineDbContext db)
         : base(db)
-            => this.mapper = mapper;
+        { }
 
         /// <summary>
         /// Gets all symbols

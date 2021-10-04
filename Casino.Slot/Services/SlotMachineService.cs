@@ -39,6 +39,11 @@ namespace Casino.Slot.Services
 
         public async Task<Result<Spin>> SpinTheSlot(string userId, long betSize)
         {
+            if (betSize < 0)
+            {
+                return Result<Spin>.Failure(new List<string> { "Cannot bet a negative amount." });
+            }
+            
             var spin = _symbolGenerationService
                 .GenerateSpin();
 

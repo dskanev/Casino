@@ -11,5 +11,10 @@ namespace Casino.ViewModels.UserHistory
         public IEnumerable<SpinHistory> PastSpins { get; set; }
         public SpinHistory BiggestWin { get; set; }
         public double Balance { get; set; }
+
+        public UserHistoryViewModel()
+        {
+            this.PastSpins = new List<SpinHistory>();
+        }
     }
 }

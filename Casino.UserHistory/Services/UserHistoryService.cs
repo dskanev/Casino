@@ -18,6 +18,7 @@ namespace Casino.UserHistory.Services
         private readonly IUserBalanceRepository userBalanceRepository;
 
         private static string UserDataNotFoundError = "No balance data was found for this user.";
+        private static string CannotHaveNegativeBalanceError = "Negative balance is not possible.";
 
         public UserHistoryService(IUserBalanceRepository userBalanceRepository,
             ISpinHistoryRepository spinHistoryRepository,
@@ -56,6 +57,12 @@ namespace Casino.UserHistory.Services
             }
 
             userBalance.Balance += balanceToAdd;
+
+            if (userBalance.Balance < 0)
+            {
+                return CannotHaveNegativeBalanceError;
+            }
+
             await userBalanceRepository.Save(userBalance);
 
             return new UserOutputModel(userBalance.Balance);
