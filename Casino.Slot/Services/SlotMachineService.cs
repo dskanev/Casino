@@ -1,8 +1,10 @@
 ﻿using Casino.Common;
+using Casino.Common.Data.Models;
 using Casino.Common.Messages;
 using Casino.Common.Services;
 using Casino.Slot.Models;
 using Casino.Slot.Models.Symbols;
+using Casino.Slot.Services.Repositories;
 using Casino.Slot.Services.Symbols;
 using MassTransit;
 using System.Collections.Generic;
@@ -14,13 +16,16 @@ namespace Casino.Slot.Services
     public class SlotMachineService : ISlotMachineService
     {
         private readonly ISymbolGenerationService _symbolGenerationService;
+        private readonly ISpinResultRepository _spinResultRepository;
         private readonly IBus _publisher;
 
         public SlotMachineService(
             ISymbolGenerationService symbolGenerationService,
+            ISpinResultRepository spinResultRepository,
             IBus publisher)
         {
             _symbolGenerationService = symbolGenerationService;
+            _spinResultRepository = spinResultRepository;
             _publisher = publisher;
         }
 
@@ -49,20 +54,43 @@ namespace Casino.Slot.Services
 
             var spinResult = CalculateWinnings(spin, betSize);
 
-            await this._publisher.Publish(new SlotMachineWasSpunMessage
+            var spinResultDb = new SpinResult
+            {
+                UserId = userId,
+                BetSize = betSize,
+                Winnings = spinResult.Winnings
+            };
+
+            var slotMachineSpunMessageData = new SlotMachineWasSpunMessage
             {
                 UserId = userId,
                 Won = spin.IsWinning,
                 Winnings = spin.Winnings,
                 BetAmmount = betSize,
                 Timestamp = System.DateTime.Now
-            });
+            };
 
-            await this._publisher.Publish(new BalanceUpdatedMessage
+            var balanceUpdatedMessageData = new BalanceUpdatedMessage
             {
                 UserId = userId,
-                AddBalance = spinResult.Winnings - betSize
-            });
+                AddBalance = spinResult.Winnings - betSize,
+                CorrelationId = new System.Guid()
+            };
+
+            var slotSpunMessage = new Message(slotMachineSpunMessageData);
+            var balanceUpdatedMessage = new Message(balanceUpdatedMessageData);
+
+            await this._spinResultRepository
+                .Save(spinResultDb, new[] { slotSpunMessage, balanceUpdatedMessage });
+
+            await this._publisher
+                .Publish(slotMachineSpunMessageData);
+            await this._spinResultRepository
+                .MarkMessageAsPublished(slotSpunMessage.Id);
+            await this._publisher
+                .Publish(balanceUpdatedMessageData);
+            await this._spinResultRepository
+                .MarkMessageAsPublished(balanceUpdatedMessage.Id);
 
             return spinResult;
         }

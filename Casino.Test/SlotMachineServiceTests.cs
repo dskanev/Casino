@@ -22,9 +22,9 @@ namespace Casino.Test
         {
             using (var context = GetContext("BetNegativeAmount"))
             {
-                var slotDataService = new SlotMachineDataService(context);
+                var slotDataService = new SymbolRepository(context);
                 var symbolGenerationService = new SymbolGenerationService(slotDataService);
-                var slotMachineService = new SlotMachineService(symbolGenerationService, null);
+                var slotMachineService = new SlotMachineService(symbolGenerationService, null, null);
 
                 var result = await slotMachineService.SpinTheSlot("123", -100);
                 Assert.IsFalse(result.Succeeded);

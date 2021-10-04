@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Casino.Common.Services
 {
+    using Casino.Common.Data.Models;
     using System.Threading.Tasks;
 
     public interface IDataService<in TEntity>
         where TEntity : class
     {
-        Task Save(TEntity entity);
+        Task MarkMessageAsPublished(long id);
+        Task Save(TEntity entity, params Message[] messages);
     }
 }

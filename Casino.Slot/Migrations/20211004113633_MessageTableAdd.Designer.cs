@@ -3,14 +3,16 @@ using Casino.Slot.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Casino.Slot.Migrations
 {
     [DbContext(typeof(SlotMachineDbContext))]
-    partial class SlotMachineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211004113633_MessageTableAdd")]
+    partial class MessageTableAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

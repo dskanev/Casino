@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Casino.Slot.Services
 {
-    public class SlotMachineDataService : DataService<Symbol>, ISlotMachineDataService
+    public class SymbolRepository : DataService<Symbol>, ISymbolRepository
     {
-        public SlotMachineDataService(SlotMachineDbContext db)
+        public SymbolRepository(SlotMachineDbContext db)
         : base(db)
         { }
 

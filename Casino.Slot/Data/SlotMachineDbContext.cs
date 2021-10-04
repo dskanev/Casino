@@ -1,4 +1,5 @@
-﻿using Casino.Slot.Models;
+﻿using Casino.Common.Data;
+using Casino.Slot.Models;
 using Casino.Slot.Models.Symbols;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Casino.Slot.Data
 {
-    public class SlotMachineDbContext : DbContext
+    public class SlotMachineDbContext : MessageDbContext
     {
         public SlotMachineDbContext(DbContextOptions<SlotMachineDbContext> options)
             : base(options)
@@ -17,12 +18,8 @@ namespace Casino.Slot.Data
         }
 
         public DbSet<Symbol> Symbols { get; set; }
+        public DbSet<SpinResult> SpinResults { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            base.OnModelCreating(builder);
-        }
+        protected override Assembly ConfigurationsAssembly => Assembly.GetExecutingAssembly();
     }
 }

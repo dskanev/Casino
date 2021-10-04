@@ -1,13 +1,13 @@
 ﻿using Casino.Common.Services;
-using Casino.Identity.Data.Models;
+using Casino.Slot.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Casino.Identity.Services
+namespace Casino.Slot.Services.Repositories
 {
-    public interface IIdentityDataService : IDataService<User>
+    public interface ISpinResultRepository : IDataService<SpinResult>
     {
     }
 }

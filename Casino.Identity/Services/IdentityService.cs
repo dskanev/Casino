@@ -14,16 +14,16 @@ namespace Casino.Identity.Services
 
         private readonly UserManager<User> userManager;
         private readonly ITokenGeneratorService jwtTokenGenerator;
-        private readonly IIdentityDataService identityDataService;
+        private readonly IUserRepository UserRepository;
 
         public IdentityService(
             UserManager<User> userManager,
             ITokenGeneratorService jwtTokenGenerator,
-            IIdentityDataService identityDataService)
+            IUserRepository UserRepository)
         {
             this.userManager = userManager;
             this.jwtTokenGenerator = jwtTokenGenerator;
-            this.identityDataService = identityDataService;
+            this.UserRepository = UserRepository;
         }
 
         public async Task<Result<User>> Register(UserInputModel userInput)

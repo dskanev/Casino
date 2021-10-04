@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Casino.Slot.Services
 {
-    public interface ISlotMachineDataService : IDataService<Symbol>
+    public interface ISymbolRepository : IDataService<Symbol>
     {
         /// <summary>
         /// Gets all symbols from the database.

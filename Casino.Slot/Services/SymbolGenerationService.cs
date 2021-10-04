@@ -16,10 +16,10 @@ namespace Casino.Slot.Services.Symbols
 {
     public class SymbolGenerationService : ISymbolGenerationService
     {
-        private readonly ISlotMachineDataService _slotMachineDataService;
-        public SymbolGenerationService(ISlotMachineDataService slotMachineDataService)
+        private readonly ISymbolRepository _SymbolRepository;
+        public SymbolGenerationService(ISymbolRepository SymbolRepository)
         {
-            _slotMachineDataService = slotMachineDataService;
+            _SymbolRepository = SymbolRepository;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Casino.Slot.Services.Symbols
         /// <returns></returns>
         public Symbol GenerateSymbol()
         {            
-            var allSymbols = _slotMachineDataService
+            var allSymbols = _SymbolRepository
                 .GetAllSymbols();
 
             return DrawSymbol(allSymbols);
@@ -40,7 +40,7 @@ namespace Casino.Slot.Services.Symbols
         /// <returns></returns>
         public Dictionary<string, double> GetSymbolsProbability()
         {
-            var allSymbols = _slotMachineDataService
+            var allSymbols = _SymbolRepository
                 .GetAllSymbols();
             var totalRarity = allSymbols
                 .Sum(x => x.Rarity);

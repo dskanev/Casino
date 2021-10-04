@@ -7,6 +7,7 @@ using Casino.Common.Services;
 using Casino.Slot.Data;
 using Casino.Slot.Models.Symbols;
 using Casino.Slot.Services;
+using Casino.Slot.Services.Repositories;
 using Casino.Slot.Services.Symbols;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +34,8 @@ namespace Casino.Slot
                 .AddTransient<IDataSeeder, SlotMachineDataSeeder>()
                 .AddTransient<ISlotMachineService, SlotMachineService>()
                 .AddTransient<ISymbolGenerationService, SymbolGenerationService>()
-                .AddTransient<ISlotMachineDataService, SlotMachineDataService>()
+                .AddTransient<ISymbolRepository, SymbolRepository>()
+                .AddTransient<ISpinResultRepository, SpinResultRepository>()
                 .AddMessaging();
 
             services.AddControllers();

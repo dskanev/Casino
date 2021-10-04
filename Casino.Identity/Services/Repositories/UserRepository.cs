@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Casino.Identity.Services
 {
-    public class IdentityDataService : DataService<User>, IIdentityDataService
+    public class UserRepository : DataService<User>, IUserRepository
     {
         private readonly IMapper mapper;
 
-        public IdentityDataService(IdentityDbContext db, IMapper mapper)
+        public UserRepository(IdentityDbContext db, IMapper mapper)
         : base(db)
             => this.mapper = mapper;
     }
