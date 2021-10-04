@@ -29,7 +29,7 @@ namespace Casino.UserHistory
                   .AddTransient<IUserHistoryService, UserHistoryService>()
                   .AddTransient<IUserBalanceRepository, UserBalanceRepository>()
                   .AddTransient<ISpinHistoryRepository, SpinHistoryRepository>()
-                  .AddMessaging(typeof(SlotMachineWasSpunConsumer), typeof(BalanceUpdatedConsumer));
+                  .AddMessaging(this.Configuration, typeof(SlotMachineWasSpunConsumer), typeof(BalanceUpdatedConsumer));
 
             services.AddControllers();
         }

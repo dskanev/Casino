@@ -36,7 +36,7 @@ namespace Casino.Slot
                 .AddTransient<ISymbolGenerationService, SymbolGenerationService>()
                 .AddTransient<ISymbolRepository, SymbolRepository>()
                 .AddTransient<ISpinResultRepository, SpinResultRepository>()
-                .AddMessaging();
+                .AddMessaging(this.Configuration);
 
             services.AddControllers();
         }
