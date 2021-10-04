@@ -4,7 +4,7 @@
 @{ ViewData["Title"] = "Home Page"; }
 
 <div class="container">
-    
+
     <div class="row">
         <table class="table table-primary">
             <thead>
@@ -19,10 +19,66 @@
             </tbody>
         </table>
     </div>
-    
+
+    <div class="mdl-grid">
+
+        <!--User History-->
+
+        <div class="mdl-cell mdl-cell--4-col">
+            <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                <div class="mdl-card__title mdl-card--expand" id="user-history">
+                    <h2 class="mdl-card__title-text homeLabel"></h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    Here you can see your past spins.
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-button mdl-button--colored" href="@Url.Action("UserHistory", "User")">
+                        Click
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!--Slot Machine-->
+
+        <div class="mdl-cell mdl-cell--4-col">
+            <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                <div class="mdl-card__title mdl-card--expand" id="slot-machine">
+                    <h2 class="mdl-card__title-text homeLabel"></h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    Here you can play the slot machine.
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-button mdl-button--colored" href="@Url.Action("SlotMachine", "Slot")">
+                        Play now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!--About-->
+
+        <div class="mdl-cell mdl-cell--4-col">
+            <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                <div class="mdl-card__title mdl-card--expand" id="about-page">
+                    <h2 class="mdl-card__title-text homeLabel"></h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    Here you can read more about the slot
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-button mdl-button--colored" href="@Url.Action("SymbolList", "Slot")">
+                        Read more
+                    </a>
+                </div>
+            </div>
+        </div>        
+    </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
 

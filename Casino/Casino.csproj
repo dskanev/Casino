@@ -15,13 +15,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Content\Images\" />
     <Folder Include="Visuals\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\css\site.css" />
     <None Include="wwwroot\favicon.ico" />
+    <None Include="wwwroot\Images\about.jpg" />
+    <None Include="wwwroot\Images\slot.jpg" />
+    <None Include="wwwroot\Images\user.png" />
     <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
