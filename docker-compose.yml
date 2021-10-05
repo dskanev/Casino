@@ -1,0 +1,105 @@
+version: "3.8"
+
+services:
+    data:
+        container_name: sqlserver
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+            - "1433:1433"
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=Test1234!1
+        volumes:
+            - sqldata:/var/opt/mssql/server
+        networks:
+            - casino-network
+    messages:
+        container_name: rabbitmq
+        image: rabbitmq:3-management
+        ports:
+            - "15672:15672"
+            - "5672:5672"
+        hostname: "rabbitmq"
+        environment:
+            - RABBITMQ_ERLANG_COOKIE=Rand0mR4bbitMqCo0k1e
+            - RABBITMQ_DEFAULT_USER=rabbitmq
+            - RABBITMQ_DEFAULT_PASS=rabbitmq
+        networks:
+            - casino-network
+    identity:
+        container_name: identity
+        build:
+            context: ./
+            dockerfile: ./Casino.Identity/Dockerfile
+        ports:
+            - "5001:80"
+        env_file: Casino.Common/common.env
+        environment:
+            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoIdentityDatabase;User Id=sa; Password=Test1234!1;MultipleActiveResultSets=true
+        restart: on-failure
+        volumes:
+            - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+        networks:
+            - casino-network
+        depends_on:
+            - data
+    slot:
+        container_name: slot
+        build:
+            context: ./
+            dockerfile: ./Casino.Slot/Dockerfile
+        ports:
+            - "6001:80"
+        env_file: Casino.Common/common.env
+        environment:
+            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoSlotDatabase;User Id=sa; Password=Test1234!1;MultipleActiveResultSets=true
+        restart: on-failure
+        volumes:
+            - ./.aspnet/slot/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+        networks:
+            - casino-network
+        depends_on:
+            - data
+    history:
+        container_name: history
+        build:
+            context: ./
+            dockerfile: ./Casino.History/Dockerfile
+        ports:
+            - "7001:80"
+        env_file: Casino.Common/common.env
+        environment:
+            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoUserHistoryDatabase;User Id=sa; Password=Test1234!1;MultipleActiveResultSets=true
+        restart: on-failure
+        volumes:
+            - ./.aspnet/history/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+        networks:
+            - casino-network
+        depends_on:
+            - data
+    client:
+        container-name: client
+        build:
+            context: ./
+            dockerfile: ./Casino/Dockerfile
+        ports:
+            - "4001:80"
+        env_file: Casino.Common/Common.env
+        environment:
+            -ServiceEndpoints__Identity="https://identity:5001"
+            -ServiceEndpoints__Slot="https//recipes:6001"
+            -ServiceEndpoints__UserHistory="https://workouts:7001"
+        restart: on-failure
+        volumes:
+            -   ./.aspnet/client/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+        networks:
+            - casino-network
+        depends-on:
+            - data
+            - identity
+            - history
+            - slot               
+networks:
+    casino-network:
+volumes:
+    sqldata:
