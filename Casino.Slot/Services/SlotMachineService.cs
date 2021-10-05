@@ -70,27 +70,16 @@ namespace Casino.Slot.Services
                 Timestamp = System.DateTime.Now
             };
 
-            var balanceUpdatedMessageData = new BalanceUpdatedMessage
-            {
-                UserId = userId,
-                AddBalance = spinResult.Winnings - betSize,
-                CorrelationId = new System.Guid()
-            };
-
             var slotSpunMessage = new Message(slotMachineSpunMessageData);
-            var balanceUpdatedMessage = new Message(balanceUpdatedMessageData);
 
             await this._spinResultRepository
-                .Save(spinResultDb, new[] { slotSpunMessage, balanceUpdatedMessage });
+                .Save(spinResultDb,slotSpunMessage);
 
             await this._publisher
                 .Publish(slotMachineSpunMessageData);
+
             await this._spinResultRepository
                 .MarkMessageAsPublished(slotSpunMessage.Id);
-            await this._publisher
-                .Publish(balanceUpdatedMessageData);
-            await this._spinResultRepository
-                .MarkMessageAsPublished(balanceUpdatedMessage.Id);
 
             return spinResult;
         }

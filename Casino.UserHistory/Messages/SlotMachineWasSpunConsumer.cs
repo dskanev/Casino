@@ -19,7 +19,8 @@ namespace Casino.UserHistory.Messages
         }
 
         public async Task Consume(ConsumeContext<SlotMachineWasSpunMessage> context)
-            => await this._userHistoryService.SaveSpinHistoryRecord(new HistoryRecordInputModel
+        {
+            await this._userHistoryService.SaveSpinHistoryRecord(new HistoryRecordInputModel
             {
                 UserId = context.Message.UserId,
                 Won = context.Message.Won,
@@ -27,5 +28,10 @@ namespace Casino.UserHistory.Messages
                 BetAmount = context.Message.BetAmmount,
                 Timestamp = context.Message.Timestamp
             });
+
+            await this._userHistoryService
+                .AddBalance(context.Message.UserId,
+                context.Message.Winnings - context.Message.BetAmmount);
+        }
     }
 }

@@ -32,8 +32,7 @@ namespace Casino.Identity
                .AddTransient<IDataSeeder, IdentityDataSeeder>()
                .AddTransient<IIdentityService, IdentityService>()
                .AddTransient<ITokenGeneratorService, TokenGeneratorService>()
-               .AddTransient<IUserRepository, UserRepository>()
-               .AddMessaging(this.Configuration);
+               .AddTransient<IUserRepository, UserRepository>();
 
             services.AddControllers();
         }

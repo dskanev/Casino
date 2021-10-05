@@ -1,4 +1,5 @@
-﻿using Casino.UserHistory.Data.Models;
+﻿using Casino.Common.Data;
+using Casino.UserHistory.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Casino.UserHistory.Data
 {
-    public class UserHistoryDbContext : DbContext
+    public class UserHistoryDbContext : MessageDbContext
     {
         public UserHistoryDbContext(DbContextOptions<UserHistoryDbContext> options)
             : base(options)
@@ -18,11 +19,6 @@ namespace Casino.UserHistory.Data
         public DbSet<SpinHistory> SpinHistory { get; set; }
         public DbSet<UserBalance> UserBalance { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            base.OnModelCreating(builder);
-        }
+        protected override Assembly ConfigurationsAssembly => Assembly.GetExecutingAssembly();
     }
 }

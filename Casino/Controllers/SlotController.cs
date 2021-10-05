@@ -55,12 +55,14 @@ namespace Casino.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> SpinTheSlot(double betSize)
+        public async Task<IActionResult> SpinTheSlot(double betSize, double? balanceUpdate = null)
         {
             var userId = _currentUserService.UserId;
-            betSize = betSize != 0 ? betSize : 5;
 
-            var userBalance = (await _userHistoryService.GetBalance(userId)).Balance;
+            var userBalance = balanceUpdate != null ?
+                (await _userHistoryService.UpdateBalance(userId, balanceUpdate.Value)).Balance :
+                (await _userHistoryService.GetBalance(userId)).Balance;
+                
 
             if (userBalance < betSize)
             {

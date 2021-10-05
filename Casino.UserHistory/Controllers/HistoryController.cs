@@ -61,21 +61,6 @@ namespace Casino.UserHistory.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("AddBalance/{userId}/{balance}")]
-        public async Task<ActionResult<UserOutputModel>> AddBalance(string userId, double balance)
-        {
-            var result = await this.userHistoryService.AddBalance(userId, balance);
-
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
-
-            return Ok(result.Data);
-        }
-
-        [Authorize]
-        [HttpPost]
         [Route("UpdateBalance/{userId}/{newBalance}")]
         public async Task<ActionResult<UserOutputModel>> UpdateBalance(string userId, double newBalance)
         {

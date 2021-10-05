@@ -73,7 +73,8 @@
                     <input asp-for="BetSize" type="number" class="form-control" id="betSize" aria-describedby="betSize" placeholder="Place your bet">
                     <span asp-validation-for="BetSize" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">Spin</button>
+                <button type="submit" class="btn btn-primary" style="float: left;">Spin</button>
+                <button class="btn btn-primary" style="float:right" asp-area="" asp-controller="Slot" asp-action="SlotMachine">Start Over</button>
             </form>
         </div>
     </div>

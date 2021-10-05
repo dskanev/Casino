@@ -8,7 +8,9 @@ namespace Casino.ViewModels.SlotMachine
 {
     public class SlotStartViewModel
     {
-        public double Balance { get; set; }
+        [Display(Name = "Update Balance")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a positive number!")]
+        public double? BalanceUpdate { get; set; }
 
         [Required]
         [Display(Name ="Bet Amount")]

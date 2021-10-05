@@ -89,3 +89,7 @@ body {
     background: url('../Images/about.jpg') center no-repeat;
     background-size: cover;
 }
+
+.btn-primary {
+    min-width: 100px !important;
+}

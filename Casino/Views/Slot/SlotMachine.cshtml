@@ -17,7 +17,12 @@
                 <input asp-for="BetSize" type="number" class="form-control" id="betSize" aria-describedby="betSize" placeholder="Place your bet">
                 <span asp-validation-for="BetSize" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Spin</button>
+            <div class="form-group">
+                <label asp-for="BalanceUpdate"></label>
+                <input asp-for="BalanceUpdate" type="number" class="form-control" id="balanceUpdate" aria-describedby="balanceUpdate" placeholder="Enter new account balance (optional)">
+                <span asp-validation-for="BalanceUpdate" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" style="float: left;">Spin</button>
         </form>
     </div>
 </div>
