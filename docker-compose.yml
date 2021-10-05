@@ -33,7 +33,6 @@ services:
             dockerfile: ./Casino.Identity/Dockerfile
         ports:
             - "5001:80"
-        env_file: Casino.Common/common.env
         environment:
             - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoIdentityDatabase;User Id=sa; Password=Test1234!1;MultipleActiveResultSets=true
         restart: on-failure
@@ -50,7 +49,6 @@ services:
             dockerfile: ./Casino.Slot/Dockerfile
         ports:
             - "6001:80"
-        env_file: Casino.Common/common.env
         environment:
             - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoSlotDatabase;User Id=sa; Password=Test1234!1;MultipleActiveResultSets=true
         restart: on-failure
@@ -64,10 +62,9 @@ services:
         container_name: history
         build:
             context: ./
-            dockerfile: ./Casino.History/Dockerfile
+            dockerfile: ./Casino.UserHistory/Dockerfile
         ports:
             - "7001:80"
-        env_file: Casino.Common/common.env
         environment:
             - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoUserHistoryDatabase;User Id=sa; Password=Test1234!1;MultipleActiveResultSets=true
         restart: on-failure
@@ -84,11 +81,10 @@ services:
             dockerfile: ./Casino/Dockerfile
         ports:
             - "4001:80"
-        env_file: Casino.Common/Common.env
         environment:
             -ServiceEndpoints__Identity="https://identity:5001"
-            -ServiceEndpoints__Slot="https//recipes:6001"
-            -ServiceEndpoints__UserHistory="https://workouts:7001"
+            -ServiceEndpoints__Slot="https//slot:6001"
+            -ServiceEndpoints__UserHistory="https://history:7001"
         restart: on-failure
         volumes:
             -   ./.aspnet/client/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
