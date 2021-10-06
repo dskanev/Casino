@@ -8,9 +8,9 @@ services:
             - "1433:1433"
         environment:
             - ACCEPT_EULA=Y
-            - SA_PASSWORD=Test1234!1
+            - SA_PASSWORD=yourStrongPassword12!@
         volumes:
-            - sqldata:/var/opt/mssql/server
+            - sqldata:/var/opt/mssql
         networks:
             - casino-network
     messages:
@@ -34,7 +34,8 @@ services:
         ports:
             - "5001:80"
         environment:
-            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoIdentityDatabase;User Id=sa; Password=Test1234!1;MultipleActiveResultSets=true
+            - ApplicationSettings__Secret=R4ND0MLY G3N3R473D US3R S3CR37
+            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoIdentityDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
         restart: on-failure
         volumes:
             - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
@@ -50,7 +51,8 @@ services:
         ports:
             - "6001:80"
         environment:
-            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoSlotDatabase;User Id=sa; Password=Test1234!1;MultipleActiveResultSets=true
+            - ApplicationSettings__Secret=R4ND0MLY G3N3R473D US3R S3CR37
+            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoSlotDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
         restart: on-failure
         volumes:
             - ./.aspnet/slot/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
@@ -66,7 +68,8 @@ services:
         ports:
             - "7001:80"
         environment:
-            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoUserHistoryDatabase;User Id=sa; Password=Test1234!1;MultipleActiveResultSets=true
+            - ApplicationSettings__Secret=R4ND0MLY G3N3R473D US3R S3CR37
+            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasinoUserHistoryDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
         restart: on-failure
         volumes:
             - ./.aspnet/history/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
@@ -82,16 +85,16 @@ services:
         ports:
             - "4001:80"
         environment:
-            -ServiceEndpoints__Identity="https://identity:5001"
-            -ServiceEndpoints__Slot="https//slot:6001"
-            -ServiceEndpoints__UserHistory="https://history:7001"
+            - ApplicationSettings__Secret=R4ND0MLY G3N3R473D US3R S3CR37
+            -ServiceEndpoints__Identity=http://identity
+            -ServiceEndpoints__Slot=http://slot
+            -ServiceEndpoints__UserHistory=http://history
         restart: on-failure
         volumes:
             -   ./.aspnet/client/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
         networks:
             - casino-network
         depends-on:
-            - data
             - identity
             - history
             - slot               
