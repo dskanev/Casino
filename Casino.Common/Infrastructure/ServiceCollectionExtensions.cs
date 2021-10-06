@@ -136,6 +136,8 @@
                 })
                 .AddMassTransitHostedService();
 
+            //HangFire server for resiliency -> currently not needed
+            /*
             services
                 .AddHangfire(config => config
                     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -148,6 +150,7 @@
 
             services
                 .AddHostedService<MessagesHostedService>();
+            */
 
             return services;
         }
