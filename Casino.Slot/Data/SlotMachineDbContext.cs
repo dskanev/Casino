@@ -15,6 +15,7 @@ namespace Casino.Slot.Data
         public SlotMachineDbContext(DbContextOptions<SlotMachineDbContext> options)
             : base(options)
         {
+            
         }
 
         public DbSet<Symbol> Symbols { get; set; }

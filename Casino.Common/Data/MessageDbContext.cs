@@ -14,7 +14,8 @@ namespace Casino.Common.Data
     {
         public MessageDbContext(DbContextOptions options)
             : base(options)
-        { 
+        {
+            this.Database.EnsureCreated();
         }
 
         public DbSet<Message> Messages { get; set; }
