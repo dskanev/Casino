@@ -34,11 +34,6 @@ namespace Casino.Common.Messages
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            this._recurringJob.AddOrUpdate(
-                nameof(MessagesHostedService),
-                () => this.ProcessPendingMessages(),
-                "*/20 */5 * * * *");
-
             return Task.CompletedTask;
         }
 
