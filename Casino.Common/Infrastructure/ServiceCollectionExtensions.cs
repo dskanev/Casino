@@ -120,11 +120,15 @@
 
                     mt.AddBus(bus => Bus.Factory.CreateUsingRabbitMq(rmq =>
                     {
+                        /*
                         rmq.Host("rabbitmq", host =>
                         {
                             host.Username("rabbitmq");
                             host.Password("rabbitmq");
                         });
+                        */
+
+                        rmq.Host("localhost");
 
                         consumers.ForEach(consumer => rmq.ReceiveEndpoint(consumer.FullName, endpoint =>
                         {
@@ -136,8 +140,6 @@
                 })
                 .AddMassTransitHostedService();
 
-            //HangFire server for resiliency -> currently not needed
-            /*
             services
                 .AddHangfire(config => config
                     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -150,7 +152,6 @@
 
             services
                 .AddHostedService<MessagesHostedService>();
-            */
 
             return services;
         }
