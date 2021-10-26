@@ -23,7 +23,7 @@ namespace Casino.Test
                 await context.SaveChangesAsync();
 
                 var userBalanceRepository = new UserBalanceRepository(context, null);
-                var service = new UserHistoryService(userBalanceRepository, null, null);
+                var service = new UserHistoryService(userBalanceRepository, null, null, null, null);
 
                 await service.AddBalance("123", -10);                
             }
@@ -44,7 +44,7 @@ namespace Casino.Test
 
                 var userBalanceRepository = new UserBalanceRepository(context, null);
 
-                var service = new UserHistoryService(userBalanceRepository, null, null);
+                var service = new UserHistoryService(userBalanceRepository, null, null, null, null);
                 await service.AddBalance("123", 10);
             }
             using (var context = GetContext("AddPositiveBalanceTest"))
@@ -64,7 +64,7 @@ namespace Casino.Test
 
                 var userBalanceRepository = new UserBalanceRepository(context, null);
 
-                var service = new UserHistoryService(userBalanceRepository, null, null);
+                var service = new UserHistoryService(userBalanceRepository, null, null, null, null);
                 await service.AddBalance("123", -110);
             }
             using (var context = GetContext("DropBalanceBelowZero"))

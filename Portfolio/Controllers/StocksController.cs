@@ -22,8 +22,16 @@ namespace Portfolio.Controllers
         [Route(nameof(PreviousClose))]
         public async Task<IActionResult> PreviousClose(string ticker)
         {
-            var result = _stockService.PreviousClose(ticker);
+            var result = await _stockService.PreviousClose(ticker);
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route(nameof(AllTickersSnapshot))]
+        public async Task<IActionResult> AllTickersSnapshot()
+        {
+            var result = await _stockService.GetAllTickersSnapshot();
+            return Ok();
         }
     }
 }

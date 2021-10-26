@@ -8,6 +8,7 @@ namespace Portfolio.Services
 {
     public interface IStockService
     {
-        TickerPreviousCloseOutput PreviousClose(string ticker);
+        Task<TickerPreviousCloseOutput> PreviousClose(string ticker);
+        Task<AllTickersSnapshotOutput> GetAllTickersSnapshot();
     }
 }

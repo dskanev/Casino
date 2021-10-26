@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Portfolio.Infrastructure;
 using Portfolio.Models.Ticker;
 using RestSharp;
 using System;
@@ -13,24 +14,33 @@ namespace Portfolio.Services
 {
     public class StockService : IStockService
     {
-        private string _apiKey { get; } = "OjHEzQV9oBrMAVO3Cml02vAiC1vBrS6O";
-        private string _baseUrl { get; } = "https://api.polygon.io/v2";
-        private string _apiKeyQueryParam { get; } = "apiKey";
-        private string _adjustedQueryParam { get; } = "adjusted";
-        public TickerPreviousCloseOutput PreviousClose(string ticker)
+        public Task<AllTickersSnapshotOutput> GetAllTickersSnapshot()
         {
             var fluentUrlBuilder = new FluentUrlBuilder()
-                .BaseUrl(_baseUrl)
-                .AppendUrlSection("aggs")
-                .AppendUrlSection("ticker")
+                .BaseUrl(PolygonURLs.BaseUrl)
+                .AppendUrlSection(PolygonURLs.AllTcikersSnapshotUrl)
+                .AppendQueryParam(UrlQueryParams.ApiKeyParam, PolygonURLs.ApiKey);
+
+            return null;
+        }
+
+        public async Task<TickerPreviousCloseOutput> PreviousClose(string ticker)
+        {
+            var fluentUrlBuilder = new FluentUrlBuilder()
+                .BaseUrl(PolygonURLs.BaseUrl)
+                .AppendUrlSection("aggs/ticker")
                 .AppendUrlSection(ticker)
                 .AppendUrlSection("prev")
-                .AppendQueryParam(_adjustedQueryParam, "true")
-                .AppendQueryParam(_apiKeyQueryParam, _apiKey);
+                .AppendQueryParam(UrlQueryParams.Adjusted, "true")
+                .AppendQueryParam(UrlQueryParams.ApiKeyParam, PolygonURLs.ApiKey);
 
-            var client = new RestClient(fluentUrlBuilder.GetUrl());
-            var request = new RestRequest("", DataFormat.Json);
-            var response = client.Get(request);
+            var clientBuilder = new RestClientBuilder()
+                .OpenClient(fluentUrlBuilder.GetUrl());
+
+            var response = await clientBuilder
+                .Client
+                .ExecuteGetAsync(clientBuilder.Request);
+
             var serialized = JsonConvert.DeserializeObject<TickerPreviousCloseOutput>(response.Content);
 
             return serialized;
