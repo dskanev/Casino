@@ -1,5 +1,6 @@
 using Casino.Common.Infrastructure;
 using Casino.UserHistory.Data;
+using Casino.UserHistory.Data.Repositories;
 using Casino.UserHistory.Messages;
 using Casino.UserHistory.Services;
 using Microsoft.AspNetCore.Builder;
@@ -29,6 +30,8 @@ namespace Casino.UserHistory
                   .AddTransient<IUserHistoryService, UserHistoryService>()
                   .AddTransient<IUserBalanceRepository, UserBalanceRepository>()
                   .AddTransient<ISpinHistoryRepository, SpinHistoryRepository>()
+                  .AddTransient<IAddressRepository, AddressRepository>()
+                  .AddTransient<IUserDetailsRepository, UserDetailsRepository>()
                   .AddMessaging(this.Configuration, typeof(SlotMachineWasSpunConsumer), typeof(BalanceUpdatedConsumer));
 
             services.AddControllers();

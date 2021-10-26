@@ -1,6 +1,8 @@
-﻿using Casino.Common.Services;
+﻿using Casino.Common.Models;
+using Casino.Common.Services;
 using Casino.UserHistory.Data.Models;
 using Casino.UserHistory.Models;
+using Casino.UserHistory.Models.UserDetails;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,5 +51,10 @@ namespace Casino.UserHistory.Services
         /// <param name="newBalance"></param>
         /// <returns></returns>
         Task<Result<UserOutputModel>> UpdateBalance(string userId, double newBalance);
+
+        Task<Result<UserDetailsInputModel>> SaveUserDetails(UserDetailsInputModel details);
+
+        Task<Result<UserDetails>> GetUserDetails(string userId);
+
     }
 }

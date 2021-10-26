@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Casino.Common.Models;
 using Casino.Common.Services;
 using Casino.UserHistory.Data;
 using Casino.UserHistory.Data.Models;
+using Casino.UserHistory.Data.Repositories;
 using Casino.UserHistory.Models;
+using Casino.UserHistory.Models.UserDetails;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,17 +19,23 @@ namespace Casino.UserHistory.Services
         private readonly IMapper mapper;
         private readonly ISpinHistoryRepository spinHistoryRepository;
         private readonly IUserBalanceRepository userBalanceRepository;
+        private readonly IUserDetailsRepository userDetailsRepository;
+        private readonly IAddressRepository addressRepository;
 
         private static string UserDataNotFoundError = "No balance data was found for this user.";
         private static string CannotHaveNegativeBalanceError = "Negative balance is not possible.";
 
         public UserHistoryService(IUserBalanceRepository userBalanceRepository,
             ISpinHistoryRepository spinHistoryRepository,
+            IUserDetailsRepository userDetailsRepository,
+            IAddressRepository addressRepository,
             IMapper mapper)
         {
             this.mapper = mapper;
             this.spinHistoryRepository = spinHistoryRepository;
             this.userBalanceRepository = userBalanceRepository;
+            this.userDetailsRepository = userDetailsRepository;
+            this.addressRepository = addressRepository;
         }
 
         public async Task<List<SpinHistory>> GetSpinHistory(string userId, int limit)
@@ -94,6 +103,25 @@ namespace Casino.UserHistory.Services
             await userBalanceRepository.Save(userBalance);
 
             return new UserOutputModel(userBalance.Balance);
+        }
+
+        public async Task<Result<UserDetailsInputModel>> SaveUserDetails(UserDetailsInputModel details)
+        {
+            var address = mapper.Map<Address>(details);
+            await addressRepository.Save(address);
+
+            var userDetails = mapper.Map<UserDetails>(details);
+            userDetails.Address = address;
+            
+            await userDetailsRepository.Save(userDetails);
+
+            return Result<UserDetailsInputModel>.SuccessWith(details);
+        }
+
+        public async Task<Result<UserDetails>> GetUserDetails(string userId)
+        {
+            var result = await userDetailsRepository.GetUserDetails(userId);
+            return Result<UserDetails>.SuccessWith(result.Data);
         }
     }
 }

@@ -105,7 +105,7 @@
             => services
                 .AddAutoMapper(
                     (_, config) => config
-                        .AddProfile(new MappingProfile(assembly)),
+                        .AddProfile(new Data.Mappings.MappingProfile(assembly)),
                     Array.Empty<Assembly>());
 
         public static IServiceCollection AddMessaging(

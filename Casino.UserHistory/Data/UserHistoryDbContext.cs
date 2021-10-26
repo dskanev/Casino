@@ -18,6 +18,8 @@ namespace Casino.UserHistory.Data
 
         public DbSet<SpinHistory> SpinHistory { get; set; }
         public DbSet<UserBalance> UserBalance { get; set; }
+        public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<Address> Address { get; set; }
 
         protected override Assembly ConfigurationsAssembly => Assembly.GetExecutingAssembly();
     }

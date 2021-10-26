@@ -1,8 +1,10 @@
 ﻿using Casino.Common.Controllers;
 using Casino.Common.Extensions;
+using Casino.Common.Models;
 using Casino.Common.Services.Identity;
 using Casino.UserHistory.Data.Models;
 using Casino.UserHistory.Models;
+using Casino.UserHistory.Models.UserDetails;
 using Casino.UserHistory.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -73,6 +75,38 @@ namespace Casino.UserHistory.Controllers
         public async Task<ActionResult<UserOutputModel>> UpdateBalance(string userId, double newBalance)
         {
             var result = await this.userHistoryService.UpdateBalance(userId, newBalance);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok(result.Data);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("UserDetails")]
+        public async Task<ActionResult<UserDetailsInputModel>> UserDetails(UserDetailsInputModel details)
+        {
+            details.UserId = currentUserService.UserId;
+            var result = await this.userHistoryService.SaveUserDetails(details);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok(result.Data);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("UserDetails")]
+        public async Task<ActionResult<UserDetails>> UserDetails(QueryInputModel query)
+        {
+            var userId = currentUserService.UserId;
+            var result = await this.userHistoryService.GetUserDetails(userId);
 
             if (!result.Succeeded)
             {

@@ -4,14 +4,16 @@ using Casino.UserHistory.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Casino.UserHistory.Migrations
 {
     [DbContext(typeof(UserHistoryDbContext))]
-    partial class UserHistoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211026073226_UserDetailsAndAddress")]
+    partial class UserDetailsAndAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,33 +42,6 @@ namespace Casino.UserHistory.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("Casino.UserHistory.Data.Models.Address", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("StreetNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Casino.UserHistory.Data.Models.SpinHistory", b =>
@@ -118,45 +93,6 @@ namespace Casino.UserHistory.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserBalance");
-                });
-
-            modelBuilder.Entity("Casino.UserHistory.Data.Models.UserDetails", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("AddressId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PersonalEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.ToTable("UserDetails");
-                });
-
-            modelBuilder.Entity("Casino.UserHistory.Data.Models.UserDetails", b =>
-                {
-                    b.HasOne("Casino.UserHistory.Data.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId");
                 });
 #pragma warning restore 612, 618
         }
