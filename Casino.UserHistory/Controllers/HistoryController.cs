@@ -1,4 +1,6 @@
 ﻿using Casino.Common.Controllers;
+using Casino.Common.Extensions;
+using Casino.Common.Services.Identity;
 using Casino.UserHistory.Data.Models;
 using Casino.UserHistory.Models;
 using Casino.UserHistory.Services;
@@ -14,15 +16,21 @@ namespace Casino.UserHistory.Controllers
     public class HistoryController : ApiController
     {
         private readonly IUserHistoryService userHistoryService;
+        private readonly ICurrentUserService currentUserService;
 
-        public HistoryController(IUserHistoryService userHistoryService)
-            => this.userHistoryService = userHistoryService;
+        public HistoryController(IUserHistoryService userHistoryService,
+            ICurrentUserService currentUserService)
+        {
+            this.userHistoryService = userHistoryService;
+            this.currentUserService = currentUserService;
+        }
 
         [Authorize]
         [HttpGet]
-        [Route("GetSpinHistory/{userId}/{limit}")]
+        [Route("GetSpinHistory")]
         public async Task<List<SpinHistory>> GetSpinHistory(string userId, int limit)
         {
+            userId.IsNullOrEmpty().OnTrue(() => userId = currentUserService.UserId);
             var result = await this.userHistoryService.GetSpinHistory(userId, limit);
             return result;
         }

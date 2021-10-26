@@ -10,7 +10,7 @@ namespace Casino.Services.UserHistory
 {
     public interface IUserHistoryService
     {
-        [Get("/History/GetSpinHistory/{userId}/{limit}")]
+        [Get("/History/GetSpinHistory")]
         Task<List<SpinHistory>> GetSpinHistory(string userId, int limit);
 
         [Get("/History/GetBiggestWin/{userId}")]
