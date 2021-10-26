@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Casino.Common.Data.Mappings;
+using Newtonsoft.Json;
+using Portfolio.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +22,7 @@ namespace Portfolio.Models.Ticker
         public int QueryCount { get; set; }
     }
 
-    public class PreviousCloseResult
+    public class PreviousCloseResult : IMapping
     {
         [JsonPropertyName("Ticker")]
         [JsonProperty("T")]
@@ -52,5 +55,13 @@ namespace Portfolio.Models.Ticker
         [JsonPropertyName("Timestamp")]
         [JsonProperty("t")]
         public long Timestamp { get; set; }
-    }
+
+        public void MappingProfile(Profile mapper)
+        {
+            mapper
+                .CreateMap<PreviousCloseResult, TickerPreviousClose>();
+            mapper
+                .CreateMap<TickerPreviousClose, PreviousCloseResult>();
+        }
+    }    
 }

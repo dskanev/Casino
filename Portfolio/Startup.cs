@@ -18,7 +18,7 @@ namespace Portfolio
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                //.AddWebService<PortfolioDbContext>(this.Configuration)
+                .AddWebService<PortfolioDbContext>(this.Configuration)
                 .AddTransient<IStockService, StockService>();
 
             services.AddControllers();
@@ -27,8 +27,8 @@ namespace Portfolio
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app
-                .UseWebService(env);
-            //.Initialize();
+                .UseWebService(env)
+                .Initialize();
         }
     }
 }

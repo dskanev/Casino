@@ -35,7 +35,6 @@ namespace Casino.UserHistory.Models.UserDetails
                 .ForMember(e => e.LastName, opt => opt.MapFrom(dest => dest.LastName))
                 .ForMember(e => e.PersonalEmail, opt => opt.MapFrom(dest => dest.PersonalEmail))
                 .ForMember(e => e.PhoneNumber, opt => opt.MapFrom(dest => dest.PhoneNumber));
-            ;
         }
     }
 }
