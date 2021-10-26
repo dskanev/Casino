@@ -25,8 +25,10 @@ namespace Portfolio
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-            => app
+        {
+            app
                 .UseWebService(env);
-                //.Initialize();
+            //.Initialize();
+        }
     }
 }

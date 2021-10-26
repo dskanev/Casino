@@ -11,10 +11,11 @@ namespace Portfolio.Infrastructure
         public RestClient Client { get; set; }
         public RestRequest Request { get; set; }
 
-        public RestClientBuilder OpenClient(string url, DataFormat dataFormat = DataFormat.Json)
+        public RestClientBuilder OpenClientWithUrl(string url, DataFormat dataFormat = DataFormat.Json)
         {
             Client = new RestClient(url);
-            Request = new RestRequest("", dataFormat);
+            Request = new RestRequest(string.Empty, dataFormat);
+            Request.AddHeader(RequestConstants.Authorization, PolygonURLs.BearerToken);
             return this;
         }
     }

@@ -18,8 +18,7 @@ namespace Portfolio.Services
         {
             var fluentUrlBuilder = new FluentUrlBuilder()
                 .BaseUrl(PolygonURLs.BaseUrl)
-                .AppendUrlSection(PolygonURLs.AllTcikersSnapshotUrl)
-                .AppendQueryParam(UrlQueryParams.ApiKeyParam, PolygonURLs.ApiKey);
+                .AppendUrlSection(PolygonURLs.AllTcikersSnapshotUrl);
 
             return null;
         }
@@ -31,11 +30,10 @@ namespace Portfolio.Services
                 .AppendUrlSection("aggs/ticker")
                 .AppendUrlSection(ticker)
                 .AppendUrlSection("prev")
-                .AppendQueryParam(UrlQueryParams.Adjusted, "true")
-                .AppendQueryParam(UrlQueryParams.ApiKeyParam, PolygonURLs.ApiKey);
+                .AppendQueryParam(RequestConstants.Adjusted, "true");
 
             var clientBuilder = new RestClientBuilder()
-                .OpenClient(fluentUrlBuilder.GetUrl());
+                .OpenClientWithUrl(fluentUrlBuilder.GetUrl());
 
             var response = await clientBuilder
                 .Client
