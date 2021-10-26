@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Casino.Slot", "Casino.Slot\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Casino.UserHistory", "Casino.UserHistory\Casino.UserHistory.csproj", "{7AF392CE-28A2-4D2B-91D6-6F868084BD16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Casino.Test", "Casino.Test\Casino.Test.csproj", "{9FAB2B37-33BA-4DC1-842E-E866C15C8574}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Casino.Test", "Casino.Test\Casino.Test.csproj", "{9FAB2B37-33BA-4DC1-842E-E866C15C8574}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio", "Portfolio\Portfolio.csproj", "{2BA1BB8F-162A-4D46-A45A-09A423BA92EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{9FAB2B37-33BA-4DC1-842E-E866C15C8574}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FAB2B37-33BA-4DC1-842E-E866C15C8574}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FAB2B37-33BA-4DC1-842E-E866C15C8574}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BA1BB8F-162A-4D46-A45A-09A423BA92EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BA1BB8F-162A-4D46-A45A-09A423BA92EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BA1BB8F-162A-4D46-A45A-09A423BA92EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BA1BB8F-162A-4D46-A45A-09A423BA92EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
