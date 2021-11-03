@@ -43,7 +43,6 @@ namespace Casino.Identity
             => app
                 .UseWebService(env)
                 .Initialize()
-                .UseSwagger()
                 .AddSwagger();
     }
 }
