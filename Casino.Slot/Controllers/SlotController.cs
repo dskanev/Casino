@@ -33,8 +33,8 @@ namespace Casino.Slot.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("SpinTheSlot/{betSize}")]
-        public async Task<ActionResult<Spin>> SpinTheSlot(long betSize)
+        [Route("GetSpinResult/{betSize}")]
+        public async Task<ActionResult<Spin>> GetSpinResult(long betSize)
         {
             var userId = _currentUserService.UserId;
             var result = await _slotMachineService.SpinTheSlot(userId, betSize);

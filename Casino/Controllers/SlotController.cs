@@ -69,7 +69,7 @@ namespace Casino.Controllers
                 return View(new SpinResultOutputModel { ErrorMessage = $"Insufficient Balance! Current Balance: {userBalance.RoundUpToOneSymbol()}" });
             }
 
-            var spinResult = await _slotService.SpinTheSlot(betSize);
+            var spinResult = await _slotService.GetSpinResult(betSize);
             var newBalance = userBalance + spinResult.Winnings - betSize;
 
             return View(new SpinResultOutputModel {

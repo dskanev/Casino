@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Casino.Common.Infrastructure;
 using Casino.Common.Services;
@@ -32,7 +33,8 @@ namespace Casino.Identity
                .AddTransient<IDataSeeder, IdentityDataSeeder>()
                .AddTransient<IIdentityService, IdentityService>()
                .AddTransient<ITokenGeneratorService, TokenGeneratorService>()
-               .AddTransient<IUserRepository, UserRepository>();
+               .AddTransient<IUserRepository, UserRepository>()
+               .AddSwagger();
 
             services.AddControllers();
         }
@@ -40,6 +42,8 @@ namespace Casino.Identity
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => app
                 .UseWebService(env)
-                .Initialize();
+                .Initialize()
+                .UseSwagger()
+                .AddSwagger();
     }
 }

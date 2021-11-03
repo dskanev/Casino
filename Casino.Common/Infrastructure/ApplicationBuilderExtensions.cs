@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using System.Reflection;
 
     public static class ApplicationBuilderExtensions
     {
@@ -50,6 +51,17 @@
             }
 
             return app;
+        }
+
+        public static IApplicationBuilder AddSwagger(
+            this IApplicationBuilder app)
+        {
+            return app
+                .UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", Assembly.GetEntryAssembly().GetName().Name);
+                });
         }
     }
 }

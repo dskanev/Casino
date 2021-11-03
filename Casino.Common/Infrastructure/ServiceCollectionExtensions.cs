@@ -14,6 +14,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
     using Models;
     using Services.Identity;
 
@@ -32,6 +33,15 @@
                 .AddControllers();
 
             return services;
+        }
+
+        public static IServiceCollection AddSwagger(
+            this IServiceCollection services)
+        {
+            return services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = Assembly.GetEntryAssembly().GetName().Name, Version = "v1" });
+            });
         }
 
         public static IServiceCollection AddDatabase<TDbContext>(
