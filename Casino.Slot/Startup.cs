@@ -36,7 +36,8 @@ namespace Casino.Slot
                 .AddTransient<ISymbolGenerationService, SymbolGenerationService>()
                 .AddTransient<ISymbolRepository, SymbolRepository>()
                 .AddTransient<ISpinResultRepository, SpinResultRepository>()
-                .AddMessaging(this.Configuration);
+                .AddMessaging(this.Configuration)
+                .AddSwagger();
 
             services.AddControllers();
         }
@@ -44,6 +45,7 @@ namespace Casino.Slot
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => app
                 .UseWebService(env)
-                .Initialize();
+                .Initialize()
+                .AddSwagger();
     }
 }

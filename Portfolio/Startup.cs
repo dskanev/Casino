@@ -20,7 +20,8 @@ namespace Portfolio
             services
                 .AddWebService<PortfolioDbContext>(this.Configuration)
                 .AddTransient<IStockService, StockService>()
-                .AddTransient<IExternalApiService, ExternalApiService>();
+                .AddTransient<IExternalApiService, ExternalApiService>()
+                .AddSwagger();
 
             services.AddControllers();
         }
@@ -29,7 +30,8 @@ namespace Portfolio
         {
             app
                 .UseWebService(env)
-                .Initialize();
+                .Initialize()
+                .AddSwagger();
         }
     }
 }

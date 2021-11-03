@@ -32,7 +32,8 @@ namespace Casino.UserHistory
                   .AddTransient<ISpinHistoryRepository, SpinHistoryRepository>()
                   .AddTransient<IAddressRepository, AddressRepository>()
                   .AddTransient<IUserDetailsRepository, UserDetailsRepository>()
-                  .AddMessaging(this.Configuration, typeof(SlotMachineWasSpunConsumer), typeof(BalanceUpdatedConsumer));
+                  .AddMessaging(this.Configuration, typeof(SlotMachineWasSpunConsumer), typeof(BalanceUpdatedConsumer))
+                  .AddSwagger();
 
             services.AddControllers();
         }
@@ -40,6 +41,7 @@ namespace Casino.UserHistory
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => app
                 .UseWebService(env)
-                .Initialize();
+                .Initialize()
+                .AddSwagger();
     }
 }
